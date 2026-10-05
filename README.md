@@ -213,7 +213,8 @@ A lock stops two runs from writing to the same results at once.
 Useful options:
 
 ```powershell
-python run.py status                               # progress of every stage
+python run.py status                               # progress bars for every stage
+python run.py status --watch 30                    # live progress bars, refreshed every 30 s
 python run.py generate --limit 20                  # pilot on the first 20 items
 python run.py generate --arms qwen-mct qwen-mct+boundary
 python run.py validate --no-judge                  # lexical detector only

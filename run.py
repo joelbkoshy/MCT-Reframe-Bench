@@ -9,7 +9,7 @@
     python run.py analyse        write results/table_*.csv and results/summary.json
     python run.py figures        draw figures/fig*.png|pdf from the tables
     python run.py architecture   draw figures/architecture.png|pdf
-    python run.py status         show progress of each stage
+    python run.py status         progress bars for each stage (--watch N refreshes every N s)
     python run.py all            every stage in order
 """
 
@@ -36,7 +36,13 @@ def _rows(path) -> int:
         return max(0, sum(1 for _ in csv.reader(fh)) - 1)
 
 
-def status() -> None:
+def _bar(label: str, done: int, total: int, width: int = 40) -> str:
+    frac = min(done / total, 1.0) if total else 0.0
+    filled = int(round(frac * width))
+    return f"{label:<12} [{'#' * filled}{'.' * (width - filled)}] {100 * frac:5.1f}%  {done}/{total}"
+
+
+def _counts() -> dict[str, tuple[int, int]] | None:
     from reframebench import data
     from reframebench.arms import ARMS
     from reframebench.calibration import NEGATIVES
@@ -44,13 +50,42 @@ def status() -> None:
     try:
         n_items = len(data.load())
     except FileNotFoundError:
-        print("items: not built (run `python run.py fetch` then `build`)")
-        return
-    print(f"eligible items : {n_items}")
-    print(f"calibration    : {_rows(CALIBRATION_PATH)} / {N_CALIBRATION_ITEMS + len(NEGATIVES)}")
-    print(f"validation     : {_rows(VALIDATION_PATH)} / {n_items - N_CALIBRATION_ITEMS}")
-    print(f"generations    : {_rows(RUNS_PATH)} / {n_items * len(ARMS)}")
-    print(f"judgements     : {_rows(JUDGE_PATH)} / {_rows(RUNS_PATH)}")
+        return None
+    n_runs = n_items * len(ARMS)
+    return {
+        "calibration": (_rows(CALIBRATION_PATH), N_CALIBRATION_ITEMS + len(NEGATIVES)),
+        "validation": (_rows(VALIDATION_PATH), n_items - N_CALIBRATION_ITEMS),
+        "generation": (_rows(RUNS_PATH), n_runs),
+        "judgement": (_rows(JUDGE_PATH), n_runs),
+    }
+
+
+def status(watch: int | None = None) -> None:
+    import os
+    import time
+
+    from reframebench.config import RESULTS
+
+    log = RESULTS / "run_log.txt"
+    while True:
+        counts = _counts()
+        if counts is None:
+            print("items: not built (run `python run.py fetch` then `build`)")
+            return
+        lines = [_bar(k, d, t) for k, (d, t) in counts.items()]
+        done = sum(d for d, _ in counts.values())
+        total = sum(t for _, t in counts.values())
+        lines += ["", _bar("overall", done, total)]
+        if log.exists():
+            tail = [ln for ln in log.read_text(encoding="utf-8", errors="replace").splitlines() if ln.strip()]
+            lines += ["", f"last: {tail[-1][:100]}" if tail else ""]
+        if watch:
+            os.system("cls" if os.name == "nt" else "clear")
+            print(time.strftime("%H:%M:%S"), f"(refresh every {watch}s, Ctrl+C to stop)\n")
+        print("\n".join(lines))
+        if not watch or done >= total:
+            return
+        time.sleep(watch)
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -71,7 +106,8 @@ def main(argv: list[str] | None = None) -> None:
     sub.add_parser("analyse")
     sub.add_parser("figures")
     sub.add_parser("architecture")
-    sub.add_parser("status")
+    p = sub.add_parser("status")
+    p.add_argument("--watch", type=int, metavar="SECONDS", help="refresh until the run completes")
     p = sub.add_parser("all")
     p.add_argument("--limit", type=int)
 
@@ -117,7 +153,10 @@ def main(argv: list[str] | None = None) -> None:
         from reframebench.architecture import draw
         draw()
     elif args.cmd == "status":
-        status()
+        try:
+            status(args.watch)
+        except KeyboardInterrupt:
+            pass
 
 
 if __name__ == "__main__":
