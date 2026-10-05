@@ -1,0 +1,27 @@
+# Environments and caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# --------------------------------------------------------------------------
+# Upstream corpus: CC BY-NC-ND 4.0 (Sharma et al., 2023). NoDerivatives means
+# neither the files nor anything that embeds their text may be redistributed.
+# `python run.py fetch` downloads them from a pinned commit and verifies them
+# by SHA-256, so every user reads byte-identical inputs.
+# --------------------------------------------------------------------------
+data/upstream/
+data/items.jsonl
+
+# Results that contain item text or model replies quoting it. Aggregate
+# tables (results/table_*.csv, results/summary.json) carry no text and may be
+# committed once a full run is complete.
+results/runs.csv
+results/judgements.csv
+results/calibration.csv
+results/validation.csv
+results/run_manifest.json
+results/*.txt
+results/.run.lock
+results/*.repair
+results/*.part

@@ -1,0 +1,167 @@
+{
+  "upstream_commit": "4c1d4afdc22bc66136d14d8131ee0aa4a2d1e55d",
+  "n_items": 600,
+  "n_escalated": 16,
+  "n_eligible": 584,
+  "n_calibration": 40,
+  "calibration_ids": [
+    "R009",
+    "R014",
+    "R024",
+    "R058",
+    "R097",
+    "R101",
+    "R118",
+    "R144",
+    "R159",
+    "R160",
+    "R164",
+    "R166",
+    "R182",
+    "R231",
+    "R240",
+    "R244",
+    "R275",
+    "R288",
+    "R291",
+    "R299",
+    "R302",
+    "R308",
+    "R311",
+    "R326",
+    "R387",
+    "R388",
+    "R396",
+    "R400",
+    "R421",
+    "R427",
+    "R435",
+    "R445",
+    "R464",
+    "R498",
+    "R525",
+    "R547",
+    "R548",
+    "R562",
+    "R574",
+    "R582"
+  ],
+  "escalated": [
+    {
+      "item_id": "R018",
+      "matched": [
+        "\\bsuicid\\w*"
+      ]
+    },
+    {
+      "item_id": "R019",
+      "matched": [
+        "\\bsuicid\\w*"
+      ]
+    },
+    {
+      "item_id": "R038",
+      "matched": [
+        "\\bkill(ing)? (myself|me)\\b"
+      ]
+    },
+    {
+      "item_id": "R039",
+      "matched": [
+        "\\bkill(ing)? (myself|me)\\b"
+      ]
+    },
+    {
+      "item_id": "R138",
+      "matched": [
+        "\\bkill(ing)? (myself|me)\\b"
+      ]
+    },
+    {
+      "item_id": "R139",
+      "matched": [
+        "\\bkill(ing)? (myself|me)\\b"
+      ]
+    },
+    {
+      "item_id": "R210",
+      "matched": [
+        "\\b(want|wanted|wish) to die\\b"
+      ]
+    },
+    {
+      "item_id": "R211",
+      "matched": [
+        "\\b(want|wanted|wish) to die\\b"
+      ]
+    },
+    {
+      "item_id": "R340",
+      "matched": [
+        "\\bsuicid\\w*",
+        "\\b(hurt|harm|cut|cutting|burn|burning) (myself|my (arm|arms|wrist|wrists|leg|legs))\\b"
+      ]
+    },
+    {
+      "item_id": "R341",
+      "matched": [
+        "\\bsuicid\\w*",
+        "\\b(hurt|harm|cut|cutting|burn|burning) (myself|my (arm|arms|wrist|wrists|leg|legs))\\b"
+      ]
+    },
+    {
+      "item_id": "R360",
+      "matched": [
+        "\\bself[- ]?harm\\w*"
+      ]
+    },
+    {
+      "item_id": "R361",
+      "matched": [
+        "\\bself[- ]?harm\\w*"
+      ]
+    },
+    {
+      "item_id": "R492",
+      "matched": [
+        "\\bsuicid\\w*"
+      ]
+    },
+    {
+      "item_id": "R493",
+      "matched": [
+        "\\bsuicid\\w*"
+      ]
+    },
+    {
+      "item_id": "R568",
+      "matched": [
+        "\\bsuicid\\w*"
+      ]
+    },
+    {
+      "item_id": "R569",
+      "matched": [
+        "\\bsuicid\\w*"
+      ]
+    }
+  ],
+  "items_hash": "8bc662ff643f9189",
+  "primary_trap_counts": {
+    "negative feeling or emotion": 80,
+    "labeling": 70,
+    "overgeneralizing": 61,
+    "mind reading": 57,
+    "all-or-nothing thinking": 57,
+    "fortune telling": 56,
+    "personalizing": 55,
+    "disqualifying the positive": 35,
+    "catastrophizing": 35,
+    "emotional reasoning": 31,
+    "not distorted": 18,
+    "should statements": 18,
+    "blaming": 17,
+    "comparing and despairing": 8,
+    "magnification": 2
+  }
+}
